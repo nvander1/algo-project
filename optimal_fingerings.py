@@ -4,8 +4,10 @@ and constants used in different implementations
 of the optimal fingering problem.
 '''
 
+
 from collections import defaultdict as dd
 from itertools import product
+
 
 '''
 A mapping from fingerings to a list of notes
@@ -22,6 +24,7 @@ F2N = {
         '111': [40, 47, 52, 56, 59, 62, 64, 66, 68]
         }
 
+
 '''
 A mapping from a note to all possible
 fingerings for a note.
@@ -37,11 +40,8 @@ def dist(f1, f2):
     Calculates the number of moved fingers between
     two fingerings.
     '''
-    count = 0
-    for i in range(len(f1)):
-        if f1[i] != f2[i]:
-            count += 1
-    return count
+    return sum(x!=y for x,y in zip(f1, f2))
+
 
 '''
 A mapping from pairs of fingerings to the distance between them.
