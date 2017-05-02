@@ -5,6 +5,7 @@ of the optimal fingering problem.
 '''
 
 from collections import defaultdict as dd
+from itertools import product
 
 '''
 A mapping from fingerings to a list of notes
@@ -41,3 +42,8 @@ def dist(f1, f2):
         if f1[i] != f2[i]:
             count += 1
     return count
+
+'''
+A mapping from pairs of fingerings to the distance between them.
+'''
+DIST = dict((pair, dist(*pair)) for pair in product(F2N.keys(), repeat=2))
