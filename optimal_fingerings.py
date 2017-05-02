@@ -46,4 +46,4 @@ def dist(f1, f2):
 '''
 A mapping from pairs of fingerings to the distance between them.
 '''
-DIST = dict((pair, dist(*pair)) for pair in product(F2N.keys(), repeat=2))
+DIST = dict((pair, dist(*pair)) for pair in product(F2N, repeat=2))
