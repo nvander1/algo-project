@@ -1,4 +1,4 @@
-class TreeNode:
+class treeNode:
     def __init__(self, fingerings, index, value, cost):
         self.fingerings = fingerings
         self.noteIndex = index
