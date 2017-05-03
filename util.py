@@ -40,7 +40,7 @@ def read_notes(filename):
     """
     with open(filename, 'r') as test_file:
         notes = [int(line) for line in test_file.read().splitlines()]
-        return notes if all(45 < note < 75 for note in notes) else None
+        return notes if all(39 < note < 75 for note in notes) else None
 
 
 if __name__ == '__main__':
