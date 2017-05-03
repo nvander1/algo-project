@@ -18,25 +18,14 @@ def process(numNotes, notes):
         while not items.empty():
             curr = items.get()
             #print(curr)
-            if curr.noteIndex < len(notes)-1:
-                for comb in N2F[notes[curr.noteIndex]]:
-                    ins = treeNode(curr.fingerings[:], curr.noteIndex+1, comb, \
-                    curr.cost+DIST[(comb,curr.value)])
-                    ins.fingerings.append(comb)
-                    if comb in choices:
-                        choices[comb].append(ins)
-                    else:
-                        choices[comb] = [ins]
-            else:
-                #print("else eval: {}, note:{}".format(curr, curr.getIndex()))
-                for comb in N2F[notes[curr.noteIndex]]:
-                    ins = treeNode(curr.fingerings[:], 500, comb,\
-                    curr.cost+DIST[(comb,curr.value)])
-                    ins.fingerings.append(comb)
-                    if comb in choices:
-                        choices[comb].append(ins)
-                    else:
-                        choices[comb] = [ins]
+            for comb in N2F[notes[curr.noteIndex]]:
+                ins = treeNode(curr.fingerings[:], curr.noteIndex+1, comb, \
+                curr.cost+DIST[(comb,curr.value)])
+                ins.fingerings.append(comb)
+                if comb in choices:
+                    choices[comb].append(ins)
+                else:
+                    choices[comb] = [ins]
         for key in choices.keys():
             #print(choices[key])
             #print("selected: {}".format(min(choices[key],key= lambda x: x.cost)))

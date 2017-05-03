@@ -26,7 +26,7 @@ def process(numNotes, notes):
         else:
             #print("else eval: {}, note:{}".format(curr, curr.getIndex()))
             for comb in N2F[notes[curr.noteIndex]]:
-                ins = treeNode(curr.fingerings[:], 500, comb,\
+                ins = treeNode(curr.fingerings[:], curr.noteIndex+1, comb,\
                 curr.cost+DIST[(comb,curr.value)])
                 ins.fingerings.append(comb)
                 finalLevel.append(ins)
