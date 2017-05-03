@@ -17,7 +17,7 @@ def process(numNotes, notes):
         curr = items.get()
         count += 1
         if curr.noteIndex < len(notes)-1:
-           # print("eval: {}, note:{}".format(curr, curr.getIndex()))
+            #print("eval: {}, note:{}".format(curr, curr.noteIndex))
             for comb in N2F[notes[curr.noteIndex]]:
                 ins = treeNode(curr.fingerings[:], curr.noteIndex+1, comb, \
                 curr.cost+DIST[(comb,curr.value)])
@@ -30,7 +30,7 @@ def process(numNotes, notes):
                 curr.cost+DIST[(comb,curr.value)])
                 ins.fingerings.append(comb)
                 finalLevel.append(ins)
-    return min(finalLevel, key=lambda x: x.getCost())
+    return min(finalLevel, key=lambda x: x.cost) 
     #print("processed:{}, lowest level: {}, total nodes: {}".format(count,len(finalLevel),count+len(finalLevel)))
 
 if __name__ == '__main__':
