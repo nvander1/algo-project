@@ -25,12 +25,11 @@ class Node():
     """
     def __init__(self, comb, parent=None):
         self.comb = comb
+        self.parent = parent
         if parent is None:
-            self.fingerings = []
             self.index = 0
             self.cost = 0
         else:
-            self.fingerings = parent.fingerings[:] + [comb]
             self.index = parent.index + 1
             self.cost = parent.cost + DIST[comb, parent.comb]
 
@@ -47,4 +46,10 @@ class Node():
         return self.cost < other.cost
 
     def __str__(self):
-        return f'{(self.cost, self.fingerings)}'
+        fingerings = [self.comb]
+        current = self.parent
+        while current is not None:
+            fingerings.append(current.comb)
+            current = current.parent
+        fingerings.reverse()
+        return f'{(self.cost, fingerings)}'
