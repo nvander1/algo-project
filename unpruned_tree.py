@@ -16,21 +16,18 @@ def nonpruning(notes):
     manner through brute force expansion of a state-space tree.
     """
     items = deque()
-    final = []
     for comb in N2F[notes[0]]:
         ins = Node(comb)
         items.append(ins)
     while items:
         cur = items.popleft()
-        if cur.index < len(notes)-1:
-            for comb in cur.choices(notes):
-                ins = Node(comb, parent=cur)
-                items.append(ins)
-        else:
-            for comb in cur.choices(notes):
-                ins = Node(comb, parent=cur)
-                final.append(ins)
-    return min(final)
+        if cur.index == len(notes):
+            items.append(cur)
+            break
+        for comb in cur.choices(notes):
+            ins = Node(comb, parent=cur)
+            items.append(ins)
+    return min(items)
 
 if __name__ == '__main__':
     TIMER = time(nonpruning)
