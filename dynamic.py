@@ -47,4 +47,4 @@ def bottom_up(notes):
 
 if __name__ == '__main__':
     TIMER = time(bottom_up)
-    print(*TIMER(read_notes(sys.argv[1])))
+    print(TIMER(read_notes(sys.argv[1]))[1])
