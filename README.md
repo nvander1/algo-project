@@ -21,3 +21,7 @@ A sequence of notes n1, n2, ..., nk.
 ### Output
 A sequence of fingerings such that the sum of finger movments
 between notes is minimal.
+
+## Implementation Dependencies
+- Pandas
+- Plotly

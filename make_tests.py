@@ -1,12 +1,13 @@
 """
 A utility for generating test files.
 """
-import sys
 import random
 
 from optimal_fingerings import N2F
 
+
 ALL_NUMS = list(N2F.keys())
+
 
 def single_test(size):
     """
@@ -15,13 +16,16 @@ def single_test(size):
     with open(f'test_files/test_{size}.txt', 'w') as file:
         file.write('\n'.join(str(n) for n in random.choices(ALL_NUMS, k=size)))
 
-if __name__ == '__main__':
-    ARGC = len(sys.argv)
-    if ARGC == 2:
-        single_test(int(sys.argv[1]))
-    elif ARGC == 4:
-        START = int(sys.argv[2])
-        SCALE = int(sys.argv[3])
-        for i in range(1, 1+int(sys.argv[1])):
-            single_test(SCALE * START ** i)
-            print(SCALE * START ** i)
+
+def all_tests():
+    """
+    Creates all test files for project.
+    """
+    input_sizes = list(range(1, 10)) \
+            + list(range(10, 100, 10)) \
+            + list(range(1000, 10000, 1000)) \
+            + [10000, 50000, 100000, 500000, 1000000]
+
+    for size in input_sizes:
+        print(size)
+        single_test(size)
