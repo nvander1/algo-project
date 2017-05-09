@@ -29,7 +29,7 @@ def make_parser():
         'sizes', metavar='N', type=int, nargs='+',
         help='number of notes in each test file')
     parser.add_argument(
-        '-d', '--dir', dest='directory', required=False, default='test_files',
+        '-d', '--dir', dest='directory', required=True,
         help='the directory in which tests are placed')
     parser.add_argument(
         '-q', '--quiet', dest='quiet', required=False, action='store_true',
