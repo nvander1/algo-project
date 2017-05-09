@@ -1,7 +1,6 @@
 """
-This module contains common utilities
-and constants used in different implementations
-of the optimal fingering problem.
+This module contains different implementations of
+solutions to the optimal fingering problem.
 """
 
 
