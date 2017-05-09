@@ -10,6 +10,10 @@ import glob
 import os
 from timeit import timeit
 
+import pandas as pd
+import plotly as py
+import plotly.graph_objs as go
+
 import optimal_fingerings as of
 import util
 
@@ -33,6 +37,9 @@ def make_parser():
     parser.add_argument(
         '-o', '--output', metavar='OUTPUT', default='results.csv', dest='output',
         help='a filename to save csv file')
+    parser.add_argument(
+        '-g', '--graph', dest='graph', action='store_true',
+        help='if present, create graphs of test data with plotly')
     return parser
 
 
@@ -53,6 +60,36 @@ def get_files(directory):
     return sorted(glob.glob(f'{directory}/*'), key=os.path.getsize)
 
 
+def graph(results):
+    """
+    Graphs result data with plotly.
+
+    Parameters
+    ----------
+    results : string
+        Pathname of csv file with results.
+    """
+    data = pd.read_csv(results)
+    bottom_up = go.Scatter(
+        x=data['Input Size'], y=data['Bottom-Up'],
+        mode='lines+markers', name='Bottom Up')
+
+    pruning = go.Scatter(
+        x=data['Input Size'], y=data['Pruning'],
+        mode='lines+markers', name='Pruning')
+
+
+    layout = go.Layout(
+        xaxis=dict(type='log', autorange=True),
+        yaxis=dict(type='log', autorange=True),
+        title='Optimal Fingering Algorithms',
+        plot_bgcolor='rgb(230, 230, 230)')
+
+    fig = go.Figure(data=[bottom_up, pruning], layout=layout)
+
+    py.offline.plot(fig, filename='Optimal_Fingering_Algorithms')
+
+
 def time(files, output, times=1):
     """
     Times Bottom-Up and Pruning methods on test files and saves as a csv.
@@ -67,7 +104,7 @@ def time(files, output, times=1):
         How many times to execute each test.
     """
     with open(output, 'w') as csv_file:
-        fields = ['Input Size', 'Bottom-Up Time', 'Pruning Time']
+        fields = ['Input Size', 'Bottom-Up', 'Pruning']
         writer = csv.DictWriter(csv_file, fieldnames=fields)
         writer.writeheader()
 
@@ -77,8 +114,8 @@ def time(files, output, times=1):
             notes = util.read_notes(filename)
             size = len(notes)
             written = {'Input Size': size}
-            written['Bottom-Up Time'] = average(lambda: of.bottom_up(notes))
-            written['Pruning Time'] = average(lambda: of.pruning(notes))
+            written['Bottom-Up'] = average(lambda: of.bottom_up(notes))
+            written['Pruning'] = average(lambda: of.pruning(notes))
             writer.writerow(written)
             print(f'Finished testing {filename}')
         print(f'Finished testing {len(files)} files')
@@ -88,3 +125,5 @@ if __name__ == '__main__':
     ARGS = make_parser().parse_args()
     FILES = get_files(ARGS.directory)
     time(FILES, ARGS.output)
+    if ARGS.graph:
+        graph(ARGS.output)
