@@ -1,6 +1,10 @@
 """
 A utility for generating test files.
 """
+
+__version_info__ = ('2017', '05', '10')
+__version__ = '-'.join(__version_info__)
+
 import argparse
 from argparse import RawTextHelpFormatter
 import os
@@ -34,6 +38,7 @@ def make_parser():
     parser.add_argument(
         '-q', '--quiet', dest='quiet', required=False, action='store_true',
         help='suppress information about files created')
+    parser.add_argument('-v', '--version', action='version', version=f'%(prog)s ({__version__})')
     return parser
 
 
